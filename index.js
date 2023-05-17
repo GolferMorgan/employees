@@ -74,3 +74,39 @@ function mainPrompts() {
     }
 })
 }
+
+// employees function
+function viewEmployees() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+        let employees = rows;
+        console.table(employees);
+    })
+    .then((() => mainPrompts()));
+}
+
+// employees by department
+function viewEmployeesByDepartment() {
+    db.findAllDepartments()
+    .then(([rows]) => {
+        let departments = rows;
+        const departmentChoice = department.map(({ id, name}) => ({
+           name: name,
+           value: id
+        }));
+        prompt([
+            {
+                type: 'list',
+                name: 'departmentId',
+                message: 'What department do you want to see all the employees for?',
+                choices: departmentChoice
+            }
+        ])
+        .then(res => db.findAllEmployeesByDepartment(res.departmentId))
+        .then(([rows]) => {
+            let employees = rows;
+            console.table(employees);
+        })
+        .then(() => mainPrompts())
+    });
+}
