@@ -1,11 +1,11 @@
-const { prompt } = require('inquirer');
+const { prompts } = require('inquirer');
 const db = require('./db');
 const logo = require("asciiart-logo");
 
 init();
 
 function init() {
-    const logoText = logo({ name: "Employee Tracker" }).render();
+    const text = logo({ name: "Employee Tracker" }).render();
     mainPrompts();
   }
 
