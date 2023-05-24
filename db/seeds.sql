@@ -9,7 +9,7 @@ VALUES
     ('Boss');
 
 INSERT INTO role
-    (title, salary, department_id)
+    (title, department_id)
 VALUES
     ('Sales', 1),
     ('Program Engineer', 2),
