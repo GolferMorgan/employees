@@ -68,7 +68,7 @@ function mainPrompts() {
         case 'ADD_EMPLOYEE':
             viewAddEmployee();
             break;
-        case 'UPDATE_EMPLOYEE':
+        case 'UPDATE_EMPLOYEE_ROLE':
             viewUpdateEmployee();
             break;
     }
@@ -90,7 +90,7 @@ function viewEmployeesByDepartment() {
     db.findAllDepartments()
     .then(([rows]) => {
         let departments = rows;
-        const departmentChoice = department.map(({ id, name}) => ({
+        const departmentChoice = departments.map(({ id, name}) => ({
            name: name,
            value: id
         }));
@@ -109,4 +109,136 @@ function viewEmployeesByDepartment() {
         })
         .then(() => mainPrompts())
     });
+}
+
+// all roles
+function viewRoles() {
+    db.findAllRoles()
+    .then(([rows]) => {
+        let roles =rows;
+        console.table(roles);
+    })
+    .then(() => mainPrompts());
+}
+
+// add department
+function viewAddDepartment() {
+    prompt([
+        {
+            name: 'name',
+            message: 'What is the department name?'
+        }
+    ])
+    .then(res => {
+        let name = res;
+        db.createDepartment(name)
+        .then(() => mainPrompts)
+    })
+}
+
+// add role
+function viewAddRole() {
+    db.findAllDepartments()
+    .then(([rows]) => {
+        let departments = rows;
+        const departmentChoice = departments.map(({ id, name}) => ({
+            name: name,
+            value: id
+        }));
+        prompt([
+            {
+                name: 'title',
+                message: 'What role would you like to add?'
+            },
+            {
+                type: "list",
+                name: "department_id",
+                message: "Which department does the role belong to?",
+                choices: departmentChoice
+            }
+        ])
+        .then(role => {
+            db.createRole(role)
+            .then(() => mainPrompts())
+        })
+    })
+}
+
+// add employee
+function viewAddEmployee() {
+    prompt([
+      {
+        name: "first_name",
+        message: "What is the employee's first name?"
+      },
+      {
+        name: "last_name",
+        message: "What is the employee's last name?"
+      }
+    ])
+      .then(res => {
+        let firstName = res.first_name;
+        let lastName = res.last_name;
+        db.findAllRoles()
+          .then(([rows]) => {
+            let roles = rows;
+            const roleChoice = roles.map(({ id, title }) => ({
+              name: title,
+              value: id
+            }));
+            prompt({
+              type: "list",
+              name: "roleId",
+              message: "What is the employee's role?",
+              choices: roleChoice
+            })
+            db.createEmployee(employee);
+            })
+            .then(() => console.log(`Added ${firstName} ${lastName} to the database`))
+            .then(() => mainPrompts())
+         })
+       }
+
+
+// update employee role
+function viewUpdateEmployee() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+      let employees = rows;
+      const employeeChoice = employees.map(({ id, first_name, last_name }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id
+      }));
+
+      prompt([
+        {
+          type: "list",
+          name: "id",
+          message: "Which employee role would you like to update?",
+          choices: employeeChoice
+        }
+      ])
+        .then(res => {
+          let employeeId = res.employeeId;
+          db.findAllRoles()
+            .then(([rows]) => {
+              let roles = rows;
+              const roleChoice = roles.map(({ id, title }) => ({
+                name: title,
+                value: id
+              }));
+
+              prompt([
+                {
+                  type: "list",
+                  name: "id",
+                  message: "What role do you want the employee to have?",
+                  choices: roleChoice
+                }
+              ])
+                .then(res => db.updateEmployeeRole(employeeId, res.roleId))
+                .then(() => mainPrompts())
+            });
+        });
+    })
 }
