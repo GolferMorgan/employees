@@ -29,5 +29,3 @@ CREATE TABLE department (
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
-
-

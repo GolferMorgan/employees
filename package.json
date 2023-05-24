@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/GolferMorgan/employees#readme",
   "dependencies": {
-    "inquirer": "^9.2.6"
+    "asciiart-logo": "^0.2.7",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.3.2"
   }
 }
