@@ -1,4 +1,4 @@
-use employees;
+use employees_db;
 
 INSERT INTO department
     (name)
@@ -9,17 +9,17 @@ VALUES
     ('Boss');
 
 INSERT INTO role
-    (title, department_id)
+    (title, salary, department_id)
 VALUES
-    ('Sales', 1),
-    ('Program Engineer', 2),
-    ('Manager', 3),
-    ('CEO', 4);
+    ('Sales', 80000, 1),
+    ('Program Engineer', 80000, 2),
+    ('Manager', 80000, 3),
+    ('CEO', 80000, 4);
 
 INSERT INTO employee
-    (first_name, last_name, role_id)
+    (first_name, last_name, role.title)
 VALUES
-    ('Mark', 'Cuban', 1, NULL),
-    ('Jake', 'Smith', 2, NULL),
-    ('John', 'Michaels', 3, NULL),
-    ('Morgan', 'Driskell', 4, NULL),
+    ('Mark', 'Cuban', 1),
+    ('Jake', 'Smith', 2),
+    ('John', 'Michaels', 3),
+    ('Morgan', 'Driskell', 4);

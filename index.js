@@ -82,7 +82,7 @@ function viewEmployees() {
         let employees = rows;
         console.table(employees);
     })
-    .then((() => mainPrompts()));
+    .then(() => mainPrompts());
 }
 
 // employees by department
@@ -90,7 +90,7 @@ function viewEmployeesByDepartment() {
     db.findAllDepartments()
     .then(([rows]) => {
         let departments = rows;
-        const departmentChoice = departments.map(({ id, name}) => ({
+        const departmentChoice = departments.map(({ id, name }) => ({
            name: name,
            value: id
         }));
@@ -104,8 +104,8 @@ function viewEmployeesByDepartment() {
         ])
         .then(res => db.findAllEmployeesByDepartment(res.departmentId))
         .then(([rows]) => {
-            let employees = rows;
-            console.table(employees);
+            let employee = rows;
+            console.table(employee);
         })
         .then(() => mainPrompts())
     });
@@ -209,7 +209,6 @@ function viewUpdateEmployee() {
         name: `${first_name} ${last_name}`,
         value: id
       }));
-
       prompt([
         {
           type: "list",
