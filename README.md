@@ -27,6 +27,6 @@
   - Email - 
   - Github - GOLFERMORGAN
   ## Contributors
-  MORGAN
+  MORGAN, numerous TA's, numerous tutors, and askBCS
   ## License
     This Project is Licensed By The MIT License
